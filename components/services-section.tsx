@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState } from "react"
@@ -11,7 +10,7 @@ const services = [
     description:
       "Create beautiful Kolam patterns with hand gestures in 3D. Watch the demo video below.",
     icon: "/icons/finger.png",
-    shape: "circle",// ✅ make sure this path exists
+    shape: "circle",
   },
   {
     title: "Neural Brush Strokes",
@@ -69,14 +68,12 @@ export function ServicesSection() {
       {videoOpen && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-lg"
-          onClick={() => setVideoOpen(false)} // ✅ click outside closes modal
+          onClick={() => setVideoOpen(false)}
         >
-          {/* Stop click propagation inside video box */}
           <div
             className="relative w-full max-w-4xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Close (X) button */}
             <button
               onClick={() => setVideoOpen(false)}
               className="absolute top-3 right-3 z-50 bg-white/10 hover:bg-white/20 
@@ -85,8 +82,6 @@ export function ServicesSection() {
             >
               ✕
             </button>
-
-            {/* Video */}
             <video
               src="/videos/gesture-control.mp4"
               className="w-full h-full object-contain"
@@ -147,7 +142,14 @@ export function ServicesSection() {
 
                 <div className="mt-8 max-w-sm">
                   <p className="text-muted-foreground mb-6 leading-relaxed text-sm">
-                    {service.description}
+                    {service.title === "Gesture-Based Kolam Creation" ? (
+                      <>
+                        Create beautiful Kolam patterns with hand gestures in 3D.{" "}
+                        <strong>Watch the demo video below.</strong>
+                      </>
+                    ) : (
+                      service.description
+                    )}
                   </p>
                   <Button
                     variant="outline"
