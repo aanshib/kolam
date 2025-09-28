@@ -7,23 +7,33 @@ import { Button } from "@/components/ui/button"
 const services = [
   {
     title: "Gesture-Based Kolam Creation",
-    description:
-      "Create beautiful Kolam patterns with hand gestures in 3D. Watch the demo video below.",
+    description: (
+      <>
+        Create beautiful Kolam patterns with hand gestures in 3D.{" "}
+        <strong>Click on Learn More button to see the demo in action.</strong>
+      </>
+    ),
     icon: "/icons/finger.png",
     shape: "circle",
+    video: "/videos/gesture-control.mp4",
+  },
+  {
+    title: "Co-create Kolams with AI",
+    description: (
+      <>
+        Create stunning Kolam patterns with our AI assistant—where tradition
+        meets innovation. <strong>Click on Learn More button to see the demo in action.</strong>
+      </>
+    ),
+    icon: "/icons/generate.png",
+    shape: "circle",
+    video: "/videos/ai-kolam.mp4",
   },
   {
     title: "Neural Brush Strokes",
     description:
       "Experience AI-powered brush strokes that learn from traditional Kolam masters to create authentic patterns.",
     icon: "/icons/neural-network.png",
-    shape: "circle",
-  },
-  {
-    title: "Co-create Kolams with AI",
-    description:
-      "Collaborate with our intelligent AI assistant to design unique Kolam patterns that blend tradition with innovation.",
-    icon: "/icons/generate.png",
     shape: "circle",
   },
   {
@@ -60,22 +70,22 @@ const getShapeClasses = (shape: string) => {
 }
 
 export function ServicesSection() {
-  const [videoOpen, setVideoOpen] = useState(false)
+  const [activeVideo, setActiveVideo] = useState<string | null>(null)
 
   return (
     <>
       {/* Video Modal */}
-      {videoOpen && (
+      {activeVideo && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-lg"
-          onClick={() => setVideoOpen(false)}
+          onClick={() => setActiveVideo(null)}
         >
           <div
             className="relative w-full max-w-4xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <button
-              onClick={() => setVideoOpen(false)}
+              onClick={() => setActiveVideo(null)}
               className="absolute top-3 right-3 z-50 bg-white/10 hover:bg-white/20 
                          text-white text-2xl font-bold rounded-full w-10 h-10 
                          flex items-center justify-center shadow-lg transition"
@@ -83,7 +93,7 @@ export function ServicesSection() {
               ✕
             </button>
             <video
-              src="/videos/gesture-control.mp4"
+              src={activeVideo}
               className="w-full h-full object-contain"
               autoPlay
               controls
@@ -142,22 +152,15 @@ export function ServicesSection() {
 
                 <div className="mt-8 max-w-sm">
                   <p className="text-muted-foreground mb-6 leading-relaxed text-sm">
-                    {service.title === "Gesture-Based Kolam Creation" ? (
-                      <>
-                        Create beautiful Kolam patterns with hand gestures in 3D.{" "}
-                        <strong>Watch the demo video below.</strong>
-                      </>
-                    ) : (
-                      service.description
-                    )}
+                    {service.description}
                   </p>
                   <Button
                     variant="outline"
                     size="sm"
                     className="border-accent text-accent hover:bg-accent hover:text-accent-foreground bg-transparent"
                     onClick={() => {
-                      if (service.title === "Gesture-Based Kolam Creation") {
-                        setVideoOpen(true)
+                      if (service.video) {
+                        setActiveVideo(service.video)
                       }
                     }}
                   >
